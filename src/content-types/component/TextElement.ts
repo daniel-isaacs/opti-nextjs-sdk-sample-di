@@ -9,7 +9,7 @@ export const TextElementCT = contentType({
   baseType: '_component',
   compositionBehaviors: ['elementEnabled'],
   properties: {
-    text: { type: 'string', displayName: 'Text', localized: true, group: 'Information', sortOrder: 10, format: 'shortString' },
+    text: { type: 'string', displayName: 'Text', isLocalized: true, group: 'Content', sortOrder: 10, format: 'shortString' },
   },
 });
 

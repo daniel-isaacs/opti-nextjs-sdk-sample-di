@@ -9,11 +9,11 @@ export const CardBlockCT = contentType({
   baseType: '_component',
   compositionBehaviors: ['sectionEnabled', 'elementEnabled'],
   properties: {
-    title: { type: 'string', displayName: 'Title', required: true, localized: true, group: 'Information', sortOrder: 0 },
-    text: { type: 'richText', displayName: 'Text', localized: true, group: 'Information', sortOrder: 0 },
-    linkText: { type: 'string', displayName: 'Link Text', localized: true, group: 'Information', sortOrder: 0 },
-    linkUrl: { type: 'url', displayName: 'Link URL', group: 'Information', sortOrder: 0 },
-    image: { type: 'contentReference', displayName: 'Image', group: 'Information', sortOrder: 0, allowedTypes: ['_image'] },
+    title: { type: 'string', displayName: 'Title', isRequired: true, isLocalized: true, group: 'Content', sortOrder: 0 },
+    text: { type: 'richText', displayName: 'Text', isLocalized: true, group: 'Content', sortOrder: 0 },
+    linkText: { type: 'string', displayName: 'Link Text', isLocalized: true, group: 'Content', sortOrder: 0 },
+    linkUrl: { type: 'url', displayName: 'Link URL', group: 'Content', sortOrder: 0 },
+    image: { type: 'contentReference', displayName: 'Image', group: 'Content', sortOrder: 0, allowedTypes: ['_image'] },
   },
 });
 
