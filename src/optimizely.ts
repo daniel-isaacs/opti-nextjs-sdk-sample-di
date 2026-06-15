@@ -26,7 +26,7 @@ initReactComponentRegistry({
     HeroBlock: components.HeroBlock,
     RichTextElement: components.RichTextElement,
     TextElement: components.TextElement,
-    // ImageElement: components.ImageElement,
+    ImageElement: components.ImageElement,
     // BannerElement: components.BannerElement,
     // CallToActionElement: components.CallToActionElement,
     BlankExperience: components.BlankExperience,
@@ -34,6 +34,5 @@ initReactComponentRegistry({
     BlankSection: components.BlankSection,
     StandardExperience: components.StandardExperience,
     SideNavBlock: components.SideNavBlock,
-    // ButtonBlock: components.ButtonBlock,
   },
 });

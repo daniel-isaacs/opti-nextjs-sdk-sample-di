@@ -2,7 +2,7 @@ import { contentType, displayTemplate } from '@optimizely/cms-sdk';
 
 export const ImageElementCT = contentType({
   key: 'ImageElement',
-  displayName: 'Image',
+  displayName: 'Image Element',
   description:
     'Single image with required alt text and an optional caption.',
   baseType: '_component',
@@ -29,8 +29,8 @@ export const ImageElementCT = contentType({
 });
 
 
-export const ImageDisplayTemplate = displayTemplate({
-  key: 'ImageDisplayTemplate',
+export const ImageElementDisplayTemplateDT = displayTemplate({
+  key: 'ImageElementDisplayTemplate',
   isDefault: true,
   displayName: 'Image Formatting',
   contentType: 'ImageElement',

@@ -8,3 +8,4 @@ export { CardBlockCT } from './component/CardBlock';
 export { SideNavBlockCT } from './component/SideNavBlock';
 export { RichTextElementCT } from './component/RichTextElement';
 export { TextElementCT } from './component/TextElement';
+export { ImageElementCT } from './component/ImageElement';
