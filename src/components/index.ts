@@ -8,3 +8,4 @@ export { default as SideNavBlock } from './blocks/SideNavBlock';
 export { default as RichTextElement } from './elements/RichTextElement';
 export { default as TextElement } from './elements/TextElement';
 export { default as ImageElement } from './elements/ImageElement';
+export { default as ImageMedia } from './media/ImageMedia';
