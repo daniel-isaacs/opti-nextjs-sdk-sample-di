@@ -27,12 +27,10 @@ initReactComponentRegistry({
     RichTextElement: components.RichTextElement,
     TextElement: components.TextElement,
     ImageElement: components.ImageElement,
-    // BannerElement: components.BannerElement,
-    // CallToActionElement: components.CallToActionElement,
     BlankExperience: components.BlankExperience,
-    // LandingPageExperience: components.LandingPageExperience,
     BlankSection: components.BlankSection,
     StandardExperience: components.StandardExperience,
     SideNavBlock: components.SideNavBlock,
+    ImageMedia: components.ImageMedia,
   },
 });
