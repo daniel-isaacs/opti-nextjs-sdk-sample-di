@@ -1,5 +1,6 @@
 import { ContentProps } from '@optimizely/cms-sdk';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
+import { blockId } from '@/lib/editUtils';
 import { TextElementCT, TextElementDisplayTemplateDT } from '@/content-types/component/TextElement';
 
 type Props = {
@@ -26,7 +27,7 @@ export default function TextElement({ content, displaySettings }: Props) {
       return (
         <h1
           className={`text-4xl font-bold text-foreground ${baseClasses}`}
-          {...pa('text')}
+          data-epi-block-id={blockId(content)} {...pa('text')}
         >
           {content.text}
         </h1>
@@ -35,7 +36,7 @@ export default function TextElement({ content, displaySettings }: Props) {
       return (
         <h2
           className={`text-3xl font-bold text-foreground ${baseClasses}`}
-          {...pa('text')}
+          data-epi-block-id={blockId(content)} {...pa('text')}
         >
           {content.text}
         </h2>
@@ -44,7 +45,7 @@ export default function TextElement({ content, displaySettings }: Props) {
       return (
         <h3
           className={`text-2xl font-semibold text-foreground ${baseClasses}`}
-          {...pa('text')}
+          data-epi-block-id={blockId(content)} {...pa('text')}
         >
           {content.text}
         </h3>
@@ -53,7 +54,7 @@ export default function TextElement({ content, displaySettings }: Props) {
       return (
         <h4
           className={`text-xl font-semibold text-foreground ${baseClasses}`}
-          {...pa('text')}
+          data-epi-block-id={blockId(content)} {...pa('text')}
         >
           {content.text}
         </h4>
@@ -62,14 +63,14 @@ export default function TextElement({ content, displaySettings }: Props) {
       return (
         <h5
           className={`text-lg font-medium text-foreground ${baseClasses}`}
-          {...pa('text')}
+          data-epi-block-id={blockId(content)} {...pa('text')}
         >
           {content.text}
         </h5>
       );
     default:
       return (
-        <p className={`text-base text-foreground ${baseClasses}`} {...pa('text')}>
+        <p className={`text-base text-foreground ${baseClasses}`} data-epi-block-id={blockId(content)} {...pa('text')}>
           {content.text}
         </p>
       );

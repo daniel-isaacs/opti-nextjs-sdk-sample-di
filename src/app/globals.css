@@ -104,10 +104,10 @@ body[data-epi-edit-mode] {
   overflow-x: hidden;
 }
 
-[data-epi-block-id],
+/* [data-epi-block-id],
 [data-epi-property-name] {
   position: relative;
-}
+} */
 
 /* Landing Page Experience — transparent header when background image is present */
 body:has(.landing-page-experience.has-background-image) > header {

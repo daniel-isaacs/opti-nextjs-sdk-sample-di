@@ -1,4 +1,5 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
+import { blockId } from '@/lib/editUtils';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { CardBlockCT } from '@/content-types/component/CardBlock';
@@ -23,7 +24,7 @@ export default function CardBlock({ content, displaySettings }: Props) {
     : (isReversed ? 'flex-col-reverse' : 'flex-col');
 
   return (
-    <div className={`bg-card rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex ${flexDirection} h-full`}>
+    <div className={`bg-card rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex ${flexDirection} h-full`} data-epi-block-id={blockId(content)}>
       {src(content.image) && (
         <div className={isHorizontal ? 'relative w-2/5 shrink-0 self-stretch min-h-48' : 'relative h-56 w-full'}>
           <Image

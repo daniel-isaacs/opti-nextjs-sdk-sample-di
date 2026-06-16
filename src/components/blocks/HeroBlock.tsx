@@ -1,4 +1,5 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
+import { blockId } from '@/lib/editUtils';
 import { HeroBlockCT } from '@/content-types/component/HeroBlock';
 import { HeroBlockDisplayTemplateDT } from '@/content-types/component/HeroBlock';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
@@ -39,7 +40,7 @@ export default function HeroBlock({ content, displaySettings }: Props) {
   const hasImage  = !!src(content.heroImage);
 
   return (
-    <div className={`relative w-full ${height} flex items-center overflow-hidden rounded-lg ${hasImage ? '' : 'bg-primary'}`}>
+    <div className={`relative w-full ${height} flex items-center overflow-hidden rounded-lg ${hasImage ? '' : 'bg-primary'}`} data-epi-block-id={blockId(content)}>
       {hasImage && (
         <Image
           src={src(content.heroImage)!}

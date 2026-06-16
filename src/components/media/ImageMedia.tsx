@@ -1,4 +1,5 @@
 import { ContentProps } from '@optimizely/cms-sdk';
+import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { ImageMediaCT } from '@/content-types/media/ImageMedia';
 
@@ -13,7 +14,7 @@ export default function ImageMedia({ content }: Props) {
   if (!url) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background" {...pa()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background" data-epi-block-id={blockId(content)} {...pa()}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={url}

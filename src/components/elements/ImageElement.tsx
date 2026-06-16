@@ -1,4 +1,5 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
+import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { cva } from 'class-variance-authority';
 import { ImageElementCT, ImageElementDisplayTemplateDT } from '@/content-types/component/ImageElement';
@@ -105,7 +106,7 @@ export default function ImageElement({ content, displaySettings, priority }: Pro
   const isEager = priority || displaySettings?.loadPriority === 'eager';
 
   return (
-    <figure className={figureVariants({ spacing })}>
+    <figure className={figureVariants({ spacing })} data-epi-block-id={blockId(content)}>
       <div className={frameVariants({ alignment, size, aspectRatio, borderRadius, shadow })}>
         <Image
           src={src(content.image)!}

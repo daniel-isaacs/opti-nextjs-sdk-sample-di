@@ -1,4 +1,5 @@
 import { ContentProps } from '@optimizely/cms-sdk';
+import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { SideNavBlockCT } from '@/content-types/component/SideNavBlock';
 import { getGraphClient } from '@/lib/graphClient';
@@ -44,7 +45,7 @@ export default async function SideNavBlock({ content }: Props) {
   }
 
   return (
-    <nav className="flex flex-col overflow-hidden rounded border border-border" {...pa()}>
+    <nav className="flex flex-col overflow-hidden rounded border border-border" data-epi-block-id={blockId(content)} {...pa()}>
       {content.heading && (
         <div className="bg-muted px-4 py-3 border-b border-border">
           <p
