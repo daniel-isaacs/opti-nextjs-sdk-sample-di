@@ -9,9 +9,9 @@ export const HeroBlockCT = contentType({
   baseType: '_component',
   compositionBehaviors: ['sectionEnabled', 'elementEnabled'],
   properties: {
-    Heading: { type: 'string', displayName: 'Heading', isLocalized: true, group: 'Content', sortOrder: 10, format: 'shortString' },
-    SubHeading: { type: 'string', displayName: 'Sub-Heading', isLocalized: true, group: 'Content', sortOrder: 20, format: 'shortString' },
-    HeroImage: { type: 'contentReference', displayName: 'Hero Image', group: 'Content', sortOrder: 30, allowedTypes: ['_image'] },
+    heading: { type: 'string', displayName: 'Heading', isLocalized: true, group: 'Content', sortOrder: 10, format: 'shortString' },
+    subHeading: { type: 'string', displayName: 'Sub-Heading', isLocalized: true, group: 'Content', sortOrder: 20, format: 'shortString' },
+    heroImage: { type: 'contentReference', displayName: 'Hero Image', group: 'Content', sortOrder: 30, allowedTypes: ['_image'] },
   },
 });
 

@@ -1,7 +1,7 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
-import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { HeroBlockCT } from '@/content-types/component/HeroBlock';
 import { HeroBlockDisplayTemplateDT } from '@/content-types/component/HeroBlock';
+import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import Image from 'next/image';
 
 type Props = {
@@ -36,19 +36,19 @@ export default function HeroBlock({ content, displaySettings }: Props) {
   const height    = heightMap[displaySettings?.height ?? 'medium'];
   const overlay   = overlayMap[displaySettings?.overlayOpacity ?? 'medium'];
   const alignment = alignmentMap[displaySettings?.textAlignment ?? 'center'];
-  const hasImage  = !!src(content.HeroImage);
+  const hasImage  = !!src(content.heroImage);
 
   return (
     <div className={`relative w-full ${height} flex items-center overflow-hidden rounded-lg ${hasImage ? '' : 'bg-primary'}`}>
       {hasImage && (
         <Image
-          src={src(content.HeroImage)!}
-          alt={getAlt(content.HeroImage, 'Hero image')}
+          src={src(content.heroImage)!}
+          alt={getAlt(content.heroImage, 'Hero image')}
           fill
           priority
           className="object-cover"
           sizes="100vw"
-          {...pa('HeroImage')}
+          {...pa('heroImage')}
         />
       )}
 
@@ -58,20 +58,20 @@ export default function HeroBlock({ content, displaySettings }: Props) {
 
       <div className={`relative z-10 w-full flex ${alignment.container} px-8 md:px-16 py-12`}>
         <div className={`max-w-2xl ${alignment.text}`}>
-          {content.Heading && (
+          {content.heading && (
             <h1
               className={`text-4xl md:text-5xl font-bold mb-4 ${hasImage ? 'text-white' : 'text-primary-foreground'}`}
-              {...pa('Heading')}
+              {...pa('heading')}
             >
-              {content.Heading}
+              {content.heading}
             </h1>
           )}
-          {content.SubHeading && (
+          {content.subHeading && (
             <p
               className={`text-lg md:text-xl ${hasImage ? 'text-white/90' : 'text-primary-foreground/80'}`}
-              {...pa('SubHeading')}
+              {...pa('subHeading')}
             >
-              {content.SubHeading}
+              {content.subHeading}
             </p>
           )}
         </div>
