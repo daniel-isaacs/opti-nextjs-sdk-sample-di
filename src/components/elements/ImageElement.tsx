@@ -102,6 +102,7 @@ export default function ImageElement({ content, displaySettings, priority }: Pro
   const shadow = (displaySettings?.shadow ?? 'none') as Shadow;
   const verticalAlignment = (displaySettings?.verticalAlignment ?? 'center') as VerticalAlignment;
   const spacing = (displaySettings?.spacing ?? 'small') as Spacing;
+  const isEager = priority || displaySettings?.loadPriority === 'eager';
 
   return (
     <figure className={figureVariants({ spacing })}>
@@ -110,7 +111,7 @@ export default function ImageElement({ content, displaySettings, priority }: Pro
           src={src(content.image)!}
           alt={getAlt(content.image, content.altText || '')}
           fill
-          priority={priority}
+          priority={isEager}
           className={imageVariants({ verticalAlignment })}
           sizes="(max-width: 768px) 100vw, 50vw"
           {...pa('image')}

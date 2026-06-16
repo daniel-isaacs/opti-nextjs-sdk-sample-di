@@ -198,5 +198,20 @@ export const ImageElementDisplayTemplateDT = displayTemplate({
           },
         },
       },
+      loadPriority: {
+        displayName: 'Load Priority',
+        editor: 'select',
+        sortOrder: 7,
+        choices: {
+          normal: {
+            displayName: 'Normal (default)',
+            sortOrder: 1,
+          },
+          eager: {
+            displayName: 'Eager (above the fold / LCP)',
+            sortOrder: 2,
+          },
+        },
+      },
     },
 });
