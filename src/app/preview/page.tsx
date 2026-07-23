@@ -1,7 +1,6 @@
 import { GraphClient, type PreviewParams } from '@optimizely/cms-sdk';
-import { OptimizelyComponent } from '@optimizely/cms-sdk/react/server';
-import { PreviewComponent } from '@optimizely/cms-sdk/react/client';
-import { withAppContext } from '@optimizely/cms-sdk/react/server';
+import { OptimizelyComponent, withAppContext } from '@optimizely/cms-sdk/react/server';
+import { NextPreviewComponent } from '@optimizely/cms-sdk/react/nextjs';
 import { getGraphGatewayUrl } from '@/lib/config';
 import PreviewError from '@/components/layout/PreviewError';
 import Script from 'next/script';
@@ -51,7 +50,7 @@ async function Page({ searchParams }: Props) {
       strategy="beforeInteractive"
       id="optimizely-communication-injector"
     />
-      <PreviewComponent />
+      <NextPreviewComponent />
       <OptimizelyComponent content={response} />
     </div>
   );

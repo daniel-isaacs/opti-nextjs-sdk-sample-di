@@ -15,7 +15,7 @@ export default function CardBlock({ content, displaySettings }: Props) {
   const { pa, src } = getPreviewUtils(content);
   const { getAlt } = damAssets(content);
 
-  const layout = displaySettings?.imageLayout ?? 'image_top';
+  const layout = (displaySettings?.imageLayout ?? 'image_top') as string;
   const isHorizontal = layout === 'image_left' || layout === 'image_right';
   const isReversed = layout === 'image_bottom' || layout === 'image_right';
 

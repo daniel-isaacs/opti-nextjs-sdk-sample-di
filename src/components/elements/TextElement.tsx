@@ -11,7 +11,7 @@ type Props = {
 export default function TextElement({ content, displaySettings }: Props) {
   const { pa } = getPreviewUtils(content);
 
-  const headingLevel = displaySettings?.headingLevel || 'plain';
+  const headingLevel = (displaySettings?.headingLevel ?? 'plain') as string;
   const alignment = displaySettings?.alignment || 'left';
 
   const alignmentClasses: Record<string, string> = {
