@@ -5,7 +5,7 @@ import {
   OptimizelyComponent,
   getPreviewUtils,
 } from '@optimizely/cms-sdk/react/server';
-import { StandardExperienceCT } from '@/content-types/experience/StandardExperience';
+import { StandardExperienceCT } from '@/content-types/experience/StandardExperienceCT';
 
 // Use BlankExperienceContentType for the composition shape (gives us `composition.nodes`),
 // intersected with StandardExperienceCT for the SEO and layout properties.
