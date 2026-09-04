@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "sync": "node scripts/sync-registries.mjs",
-    "scaffold": "node scripts/scaffold-component.mjs"
+    "scaffold": "node scripts/scaffold-component.mjs",
+    "cms:push": "optimizely-cms-cli config push ./optimizely.config.mjs",
+    "cms:push:force": "optimizely-cms-cli config push ./optimizely.config.mjs --force",
+    "cms:pull": "optimizely-cms-cli config pull --output ./src/content-types"
   },
   "dependencies": {
     "@optimizely/cms-sdk": "2.2.0",
@@ -17,6 +20,10 @@
     "next": "16.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
+    "lightningcss-linux-x64-gnu": "^1.33.0"
   },
   "devDependencies": {
     "@optimizely/cms-cli": "2.2.0",

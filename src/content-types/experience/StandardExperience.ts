@@ -1,4 +1,5 @@
 import { contentType } from '@optimizely/cms-sdk';
+import { SeoContract } from '../contract/SeoContract';
 
 /**
  * Standard Experience
@@ -8,6 +9,7 @@ export const StandardExperienceCT = contentType({
   displayName: 'Standard Experience',
   baseType: '_experience',
   mayContainTypes: ['*'],
+  extends: SeoContract,
   properties: {
     leftRail: {
       type: 'array',
@@ -23,8 +25,5 @@ export const StandardExperienceCT = contentType({
       sortOrder: 0,
       items: { type: 'content', allowedTypes: ['_component'] },
     },
-    metaTitle: { type: 'string', displayName: 'Meta Title', isLocalized: true, group: 'seo', sortOrder: 10, format: 'shortString' },
-    metaDescription: { type: 'string', displayName: 'Meta Description', isLocalized: true, group: 'seo', sortOrder: 20 },
-    Schema: { type: 'string', displayName: 'Schema', group: 'seo', sortOrder: 30 },
   },
 });

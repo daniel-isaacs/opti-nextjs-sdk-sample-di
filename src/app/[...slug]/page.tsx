@@ -21,15 +21,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const content = await getContent(slug);
   if (!content) return {};
 
-  const c = content as Record<string, unknown>;
-  const title =
-    (typeof c.metaTitle === 'string' && c.metaTitle) ||
-    (typeof c.heading === 'string' && c.heading) ||
-    undefined;
-  const description =
-    (typeof c.metaDescription === 'string' && c.metaDescription) || undefined;
+  // Both ArticlePage and StandardExperience extend SeoContract.
+  // `heading` is ArticlePage-specific and used as a title fallback.
+  const c = content as { metaTitle?: string | null; metaDescription?: string | null; heading?: string | null };
+const title = c.metaTitle || c.heading || undefined;
+  const description = c.metaDescription || undefined;
 
-  return { title, description };
+  return {
+    title,
+    description,
+    openGraph: {
+      title: title ?? undefined,
+      description: description ?? undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title ?? undefined,
+      description: description ?? undefined,
+    },
+  };
 }
 
 export async function Page({ params }: Props) {

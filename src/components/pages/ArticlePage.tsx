@@ -17,13 +17,14 @@ export default function ArticlePage({ content }: Props) {
       {src(content.featuredImage) && (
         <div className="relative w-full h-64 md:h-112 mb-10 rounded-xl overflow-hidden shadow-md">
           <Image
+            {...pa('featuredImage')}
             src={src(content.featuredImage)!}
             alt={getAlt(content.featuredImage, 'Featured image')}
             fill
             priority
+            loading="eager"
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 896px"
-            {...pa('featuredImage')}
           />
         </div>
       )}

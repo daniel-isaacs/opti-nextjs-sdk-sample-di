@@ -1,3 +1,5 @@
+export { SeoContract } from './contract/SeoContract';
+
 export { StandardExperienceCT } from './experience/StandardExperience';
 
 export { ArticlePageCT } from './page/ArticlePage';
