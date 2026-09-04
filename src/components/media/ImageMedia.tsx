@@ -1,7 +1,7 @@
 import { ContentProps } from '@optimizely/cms-sdk';
 import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
-import { ImageMediaCT } from '@/content-types/media/ImageMedia';
+import { ImageMediaCT } from '@/content-types/media/ImageMediaCT';
 
 type Props = {
   content: ContentProps<typeof ImageMediaCT>;

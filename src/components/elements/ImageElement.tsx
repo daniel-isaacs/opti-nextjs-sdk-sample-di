@@ -2,12 +2,13 @@ import { ContentProps, damAssets } from '@optimizely/cms-sdk';
 import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { cva } from 'class-variance-authority';
-import { ImageElementCT, ImageElementDisplayTemplateDT } from '@/content-types/component/ImageElement';
+import { ImageElementCT } from '@/content-types/component/ImageElementCT';
+import { ImageElementDisplayTemplate } from '@/content-types/displayTemplates/ImageElementDisplayTemplate';
 import Image from 'next/image';
 
 type Props = {
   content: ContentProps<typeof ImageElementCT>;
-  displaySettings?: ContentProps<typeof ImageElementDisplayTemplateDT>;
+  displaySettings?: ContentProps<typeof ImageElementDisplayTemplate>;
   priority?: boolean;
 };
 

@@ -1,7 +1,8 @@
-export { BlankSectionDisplayTemplateDT } from './BlankSectionDisplayTemplate';
-export { CardBlockDisplayTemplateDT } from '../component/CardBlock';
-export { ColumnDisplayTemplateDT } from './ColumnDisplayTemplate';
-export { HeroBlockDisplayTemplateDT } from '../component/HeroBlock';
-export { RowDisplayTemplateDT } from './RowDisplayTemplate';
-export { TextElementDisplayTemplateDT } from '../component/TextElement';
-export { ImageElementDisplayTemplateDT } from '../component/ImageElement';
+export { BlankSectionDisplayTemplate } from './BlankSectionDisplayTemplate';
+export { CardBlockDisplayTemplate } from './CardBlockDisplayTemplate';
+export { ColumnDisplayTemplate } from './ColumnDisplayTemplate';
+export { HeroBlockDisplayTemplate } from './HeroBlockDisplayTemplate';
+export { RowDisplayTemplate } from './RowDisplayTemplate';
+export { TextElementDisplayTemplate } from './TextElementDisplayTemplate';
+export { ImageElementDisplayTemplate } from './ImageElementDisplayTemplate';
+export { ButtonBlockDisplayTemplate } from './ButtonBlockDisplayTemplate';

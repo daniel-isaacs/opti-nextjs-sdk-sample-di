@@ -1,7 +1,7 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
-import { ArticlePageCT } from '@/content-types/page/ArticlePage';
+import { ArticlePageCT } from '@/content-types/page/ArticlePageCT';
 import Image from 'next/image';
 
 type Props = {

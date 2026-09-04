@@ -7,8 +7,15 @@ export const RichTextElementCT = contentType({
   key: 'RichTextElement',
   displayName: 'Rich Text Element',
   baseType: '_component',
-  compositionBehaviors: ['elementEnabled'],
+  compositionBehaviors: [
+    'elementEnabled'
+  ],
   properties: {
-    content: { type: 'richText', displayName: 'Content', isLocalized: true, group: 'Content', sortOrder: 0 },
-  },
+    content: {
+      type: 'richText',
+      displayName: 'Content',
+      isLocalized: true,
+      group: 'Content'
+    }
+  }
 });

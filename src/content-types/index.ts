@@ -1,14 +1,16 @@
 export { SeoContract } from './contract/SeoContract';
 
-export { StandardExperienceCT } from './experience/StandardExperience';
+export { StandardExperienceCT } from './experience/StandardExperienceCT';
 
-export { ArticlePageCT } from './page/ArticlePage';
+export { ArticlePageCT } from './page/ArticlePageCT';
 
-export { HeroBlockCT } from './component/HeroBlock';
+export { HeroBlockCT } from './component/HeroBlockCT';
 
-export { CardBlockCT } from './component/CardBlock';
-export { SideNavBlockCT } from './component/SideNavBlock';
-export { RichTextElementCT } from './component/RichTextElement';
-export { TextElementCT } from './component/TextElement';
-export { ImageElementCT } from './component/ImageElement';
-export { ImageMediaCT } from './media/ImageMedia';
+export { CardBlockCT } from './component/CardBlockCT';
+export { SideNavBlockCT } from './component/SideNavBlockCT';
+export { RichTextElementCT } from './component/RichTextElementCT';
+export { TextElementCT } from './component/TextElementCT';
+export { ImageElementCT } from './component/ImageElementCT';
+export { ImageMediaCT } from './media/ImageMediaCT';
+export { GenericMediaCT } from './media/GenericMediaCT';
+export { VideoMediaCT } from './video/VideoMediaCT';

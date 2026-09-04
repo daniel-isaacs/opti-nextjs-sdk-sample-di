@@ -2,13 +2,13 @@ import { ContentProps, damAssets } from '@optimizely/cms-sdk';
 import { blockId } from '@/lib/editUtils';
 import { RichText } from '@optimizely/cms-sdk/react/richText';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
-import { CardBlockCT } from '@/content-types/component/CardBlock';
-import { CardBlockDisplayTemplateDT } from '@/content-types/component/CardBlock';
+import { CardBlockCT } from '@/content-types/component/CardBlockCT';
+import { CardBlockDisplayTemplate } from '@/content-types/displayTemplates/CardBlockDisplayTemplate';
 import Image from 'next/image';
 
 type Props = {
   content: ContentProps<typeof CardBlockCT>;
-  displaySettings?: ContentProps<typeof CardBlockDisplayTemplateDT>;
+  displaySettings?: ContentProps<typeof CardBlockDisplayTemplate>;
 };
 
 export default function CardBlock({ content, displaySettings }: Props) {

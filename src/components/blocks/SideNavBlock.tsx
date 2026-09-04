@@ -1,7 +1,7 @@
 import { ContentProps } from '@optimizely/cms-sdk';
 import { blockId } from '@/lib/editUtils';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
-import { SideNavBlockCT } from '@/content-types/component/SideNavBlock';
+import { SideNavBlockCT } from '@/content-types/component/SideNavBlockCT';
 import { getGraphClient } from '@/lib/graphClient';
 import Link from 'next/link';
 

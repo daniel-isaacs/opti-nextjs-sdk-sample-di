@@ -36,7 +36,11 @@ function parseCT(text, stem) {
   const ctMatch = text.match(/export\s+const\s+(\w+CT)\s*=/);
   if (!ctMatch) return null;
 
-  const dtMatch = text.match(/export\s+const\s+(\w+DisplayTemplateDT)\s*=/);
+  // DTs are now standalone files in displayTemplates/ named <ContentType>DisplayTemplate.ts
+  // Derive the base name by stripping the CT suffix (e.g. CardBlockCT → CardBlock)
+  const baseName = stem.replace(/CT$/, '');
+  const dtFile = src('content-types', 'displayTemplates', `${baseName}DisplayTemplate.ts`);
+  const dtExport = existsSync(dtFile) ? `${baseName}DisplayTemplate` : null;
 
   // Extract the properties: { ... } block using a brace-depth scan
   const propertiesStart = text.match(/\bproperties\s*:\s*\{/);
@@ -71,7 +75,7 @@ function parseCT(text, stem) {
 
   return {
     ctExport: ctMatch[1],
-    dtExport: dtMatch?.[1] ?? null,
+    dtExport,
     stem,
     props,
   };
@@ -122,17 +126,18 @@ function propLine(prop) {
 // ── Build the component source ───────────────────────────────────────────────
 
 function generateComponent(name, ct, ctGroup) {
-  const importPath = `@/content-types/${ctGroup}/${ct.stem}`;
+  const ctImportPath = `@/content-types/${ctGroup}/${ct.stem}`;
+  const dtImportPath = ct.dtExport ? `@/content-types/displayTemplates/${ct.dtExport}` : null;
   const hasDT = !!ct.dtExport;
   const params = hasDT ? `{ content, displaySettings }: Props` : `{ content }: Props`;
 
   const lines = [
     `import { ContentProps } from '@optimizely/cms-sdk';`,
     `import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';`,
-    `import { ${ct.ctExport} } from '${importPath}';`,
+    `import { ${ct.ctExport} } from '${ctImportPath}';`,
   ];
   if (hasDT) {
-    lines.push(`import { ${ct.dtExport} } from '${importPath}';`);
+    lines.push(`import { ${ct.dtExport} } from '${dtImportPath}';`);
   }
   lines.push('');
   lines.push('type Props = {');
@@ -187,11 +192,12 @@ let created = 0;
 for (const { dir, ctGroup } of GROUPS) {
   for (const file of tsFiles(dir)) {
     const stem = basename(file, '.ts');
+    const name = stem.replace(/CT$/, ''); // component name: ButtonBlockCT → ButtonBlock
 
-    if (requested.size > 0 && !requested.has(stem)) continue;
+    if (requested.size > 0 && !requested.has(stem) && !requested.has(name)) continue;
     if (/^Base/.test(stem)) continue; // abstract base types — no component
-    if (existing.has(stem)) {
-      if (requested.has(stem)) console.log(`  skipping ${stem} — component already exists`);
+    if (existing.has(name)) {
+      if (requested.has(stem) || requested.has(name)) console.log(`  skipping ${name} — component already exists`);
       continue;
     }
 
@@ -202,15 +208,15 @@ for (const { dir, ctGroup } of GROUPS) {
       continue;
     }
 
-    const subdir = getSubdir(stem);
+    const subdir = getSubdir(name);
     const outDir = src('components', subdir);
     if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
-    const outPath = join(outDir, `${stem}.tsx`);
-    write(outPath, generateComponent(stem, ct, ctGroup));
+    const outPath = join(outDir, `${name}.tsx`);
+    write(outPath, generateComponent(name, ct, ctGroup));
 
     const dtNote = ct.dtExport ? ` + ${ct.dtExport}` : '';
-    console.log(`  created  src/components/${subdir}/${stem}.tsx  [${ct.props.map(p => p.name).join(', ')}]${dtNote}`);
+    console.log(`  created  src/components/${subdir}/${name}.tsx  [${ct.props.map(p => p.name).join(', ')}]${dtNote}`);
     created++;
   }
 }

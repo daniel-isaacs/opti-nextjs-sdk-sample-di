@@ -1,11 +1,12 @@
 import { ContentProps } from '@optimizely/cms-sdk';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import { blockId } from '@/lib/editUtils';
-import { TextElementCT, TextElementDisplayTemplateDT } from '@/content-types/component/TextElement';
+import { TextElementCT } from '@/content-types/component/TextElementCT';
+import { TextElementDisplayTemplate } from '@/content-types/displayTemplates/TextElementDisplayTemplate';
 
 type Props = {
   content: ContentProps<typeof TextElementCT>;
-  displaySettings?: ContentProps<typeof TextElementDisplayTemplateDT>;
+  displaySettings?: ContentProps<typeof TextElementDisplayTemplate>;
 };
 
 export default function TextElement({ content, displaySettings }: Props) {

@@ -58,9 +58,8 @@ const componentCTs  = findNamedExports(src('content-types', 'component'),  'CT')
 const pageCTs       = findNamedExports(src('content-types', 'page'),       'CT');
 const experienceCTs = findNamedExports(src('content-types', 'experience'), 'CT');
 
-// Display templates can live co-located in component/ or as standalone files in displayTemplates/
-const componentDTs  = findNamedExports(src('content-types', 'component'),        'DisplayTemplateDT');
-const standaloneDTs = findNamedExports(src('content-types', 'displayTemplates'), 'DisplayTemplateDT');
+// Display templates live as standalone files in displayTemplates/
+const standaloneDTs = findNamedExports(src('content-types', 'displayTemplates'), 'DisplayTemplate');
 
 // ── Discover components ──────────────────────────────────────────────────────
 
@@ -111,12 +110,6 @@ console.log('\nsrc/content-types/displayTemplates/index.ts');
   let text = read(path);
   let added = 0;
 
-  for (const { name, stem } of componentDTs) {
-    if (text.includes(`{ ${name} }`)) continue;
-    text += `export { ${name} } from '../component/${stem}';\n`;
-    console.log(`  + ${name}  (from component/${stem})`);
-    added++;
-  }
   for (const { name, stem } of standaloneDTs) {
     if (text.includes(`{ ${name} }`)) continue;
     text += `export { ${name} } from './${stem}';\n`;
@@ -158,7 +151,8 @@ console.log('\nsrc/optimizely.ts (resolver)');
   // Only register components that have a corresponding CT defined in code.
   // Components like BlankExperience/BlankSection use SDK-provided types and
   // are registered manually — don't touch them here.
-  const ctStems = new Set([...componentCTs, ...pageCTs, ...experienceCTs].map(ct => ct.stem));
+  // Component files are named without the CT suffix (ButtonBlockCT.ts → ButtonBlock.tsx)
+  const ctStems = new Set([...componentCTs, ...pageCTs, ...experienceCTs].map(ct => ct.stem.replace(/CT$/, '')));
 
   let insertions = '';
   for (const { name } of allComponents) {

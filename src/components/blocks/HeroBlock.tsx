@@ -1,13 +1,13 @@
 import { ContentProps, damAssets } from '@optimizely/cms-sdk';
 import { blockId } from '@/lib/editUtils';
-import { HeroBlockCT } from '@/content-types/component/HeroBlock';
-import { HeroBlockDisplayTemplateDT } from '@/content-types/component/HeroBlock';
+import { HeroBlockCT } from '@/content-types/component/HeroBlockCT';
+import { HeroBlockDisplayTemplate } from '@/content-types/displayTemplates/HeroBlockDisplayTemplate';
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server';
 import Image from 'next/image';
 
 type Props = {
   content: ContentProps<typeof HeroBlockCT>;
-  displaySettings?: ContentProps<typeof HeroBlockDisplayTemplateDT>;
+  displaySettings?: ContentProps<typeof HeroBlockDisplayTemplate>;
 };
 
 const heightMap: Record<string, string> = {

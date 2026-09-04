@@ -4,7 +4,7 @@ import {
   getPreviewUtils,
   StructureContainerProps,
 } from '@optimizely/cms-sdk/react/server';
-import { BlankSectionDisplayTemplateDT } from '@/content-types/displayTemplates/BlankSectionDisplayTemplate';
+import { BlankSectionDisplayTemplate } from '@/content-types/displayTemplates/BlankSectionDisplayTemplate';
 
 const sectionSpacingMap: Record<string, string> = {
   none: 'py-0',
@@ -80,7 +80,7 @@ const columnPaddingMap: Record<string, string> = {
 
 type BlankSectionProps = {
   content: ContentProps<typeof BlankSectionContentType>;
-  displaySettings?: ContentProps<typeof BlankSectionDisplayTemplateDT>;
+  displaySettings?: ContentProps<typeof BlankSectionDisplayTemplate>;
 };
 
 export default function BlankSection({ content, displaySettings }: BlankSectionProps) {
