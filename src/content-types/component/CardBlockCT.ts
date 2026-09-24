@@ -17,24 +17,28 @@ export const CardBlockCT = contentType({
       displayName: 'Title',
       isLocalized: true,
       isRequired: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     },
     text: {
       type: 'richText',
       displayName: 'Text',
       isLocalized: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     },
     linkText: {
       type: 'string',
       displayName: 'Link Text',
       isLocalized: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     },
     linkUrl: {
       type: 'url',
       displayName: 'Link URL',
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     },
     image: {
       type: 'contentReference',

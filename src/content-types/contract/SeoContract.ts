@@ -14,7 +14,8 @@ export const SeoContract = contract({
       isLocalized: true,
       group: 'seo',
       sortOrder: 10,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     metaDescription: {
       type: 'string',
@@ -22,7 +23,8 @@ export const SeoContract = contract({
       isLocalized: true,
       group: 'seo',
       sortOrder: 20,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     Schema: {
       type: 'string',
@@ -30,7 +32,8 @@ export const SeoContract = contract({
       isLocalized: true,
       group: 'seo',
       sortOrder: 30,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     }
   }
 });

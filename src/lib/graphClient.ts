@@ -4,6 +4,6 @@ import { getGraphGatewayUrl } from './config';
 export function getGraphClient() {
   return new GraphClient(process.env.OPTIMIZELY_GRAPH_SINGLE_KEY!, {
     graphUrl: getGraphGatewayUrl(),
-    host: process.env.APPLICATION_HOST,
+    query: { host: process.env.APPLICATION_HOST },
   });
 }

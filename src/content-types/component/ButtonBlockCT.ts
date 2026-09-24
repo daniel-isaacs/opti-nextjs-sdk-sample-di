@@ -16,13 +16,15 @@ export const ButtonBlockCT = contentType({
       format: 'shortString',
       displayName: 'Button Label',
       group: 'Content',
-      sortOrder: 10
+      sortOrder: 10,
+      allowedTypes: []
     },
     buttonLink: {
       type: 'url',
       displayName: 'Button Link',
       group: 'Content',
-      sortOrder: 20
+      sortOrder: 20,
+      allowedTypes: []
     }
   }
 });

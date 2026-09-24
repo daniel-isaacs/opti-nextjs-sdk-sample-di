@@ -32,7 +32,8 @@ export const ArticlePageCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 10,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     heading: {
       type: 'string',
@@ -41,7 +42,8 @@ export const ArticlePageCT = contentType({
       isLocalized: true,
       group: 'Content',
       sortOrder: 20,
-      indexingType: 'searchable'
+      indexingType: 'searchable',
+      allowedTypes: []
     },
     metaDescription: {
       type: 'string',
@@ -49,7 +51,8 @@ export const ArticlePageCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 20,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     body: {
       type: 'richText',
@@ -57,7 +60,8 @@ export const ArticlePageCT = contentType({
       isLocalized: true,
       group: 'Content',
       sortOrder: 30,
-      indexingType: 'searchable'
+      indexingType: 'searchable',
+      allowedTypes: []
     },
     Schema: {
       type: 'string',
@@ -65,7 +69,8 @@ export const ArticlePageCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 30,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     }
   }
 });

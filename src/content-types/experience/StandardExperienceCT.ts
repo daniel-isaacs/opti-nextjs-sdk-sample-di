@@ -19,6 +19,7 @@ export const StandardExperienceCT = contentType({
       type: 'array',
       displayName: 'Left Rail',
       group: 'Content',
+      allowedTypes: [],
       items: {
         type: 'content',
         allowedTypes: [
@@ -30,6 +31,7 @@ export const StandardExperienceCT = contentType({
       type: 'array',
       displayName: 'Right Rail',
       group: 'Content',
+      allowedTypes: [],
       items: {
         type: 'content',
         allowedTypes: [
@@ -44,7 +46,8 @@ export const StandardExperienceCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 10,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     metaDescription: {
       type: 'string',
@@ -52,7 +55,8 @@ export const StandardExperienceCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 20,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     },
     Schema: {
       type: 'string',
@@ -60,7 +64,8 @@ export const StandardExperienceCT = contentType({
       isLocalized: true,
       group: 'seo',
       sortOrder: 30,
-      indexingType: 'queryable'
+      indexingType: 'queryable',
+      allowedTypes: []
     }
   }
 });

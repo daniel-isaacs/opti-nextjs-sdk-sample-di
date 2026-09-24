@@ -15,7 +15,8 @@ export const RichTextElementCT = contentType({
       type: 'richText',
       displayName: 'Content',
       isLocalized: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     }
   }
 });

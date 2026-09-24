@@ -17,7 +17,8 @@ export const TextElementCT = contentType({
       displayName: 'Text',
       isLocalized: true,
       group: 'Content',
-      sortOrder: 10
+      sortOrder: 10,
+      allowedTypes: []
     }
   }
 });

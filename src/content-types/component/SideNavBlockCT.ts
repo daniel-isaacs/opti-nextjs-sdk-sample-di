@@ -16,13 +16,15 @@ export const SideNavBlockCT = contentType({
       format: 'shortString',
       displayName: 'Heading',
       group: 'Content',
-      sortOrder: 10
+      sortOrder: 10,
+      allowedTypes: []
     },
     autoGenerate: {
       type: 'boolean',
       displayName: 'Auto Generate',
       group: 'Content',
-      sortOrder: 20
+      sortOrder: 20,
+      allowedTypes: []
     },
     rootPage: {
       type: 'contentReference',
@@ -39,8 +41,10 @@ export const SideNavBlockCT = contentType({
       format: 'LinkCollection',
       group: 'Content',
       sortOrder: 40,
+      allowedTypes: [],
       items: {
-        type: 'link'
+        type: 'link',
+        allowedTypes: []
       }
     }
   }

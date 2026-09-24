@@ -25,13 +25,15 @@ export const ImageElementCT = contentType({
       displayName: 'Alt Text',
       isLocalized: true,
       isRequired: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     },
     caption: {
       type: 'string',
       displayName: 'Caption',
       isLocalized: true,
-      group: 'Content'
+      group: 'Content',
+      allowedTypes: []
     }
   }
 });
