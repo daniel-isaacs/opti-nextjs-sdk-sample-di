@@ -11,7 +11,7 @@
     "scaffold": "node scripts/scaffold-component.mjs",
     "cms:push": "optimizely-cms-cli config push ./optimizely.config.mjs",
     "cms:push:force": "optimizely-cms-cli config push ./optimizely.config.mjs --force",
-    "cms:pull": "optimizely-cms-cli config pull --output ./src/content-types --group"
+    "cms:pull": "optimizely-cms-cli config pull --output ./src/content-types --group && npm run sync"
   },
   "dependencies": {
     "@optimizely/cms-sdk": "3.0.0",

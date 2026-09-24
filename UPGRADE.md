@@ -156,10 +156,12 @@ Ensure `package.json` has these scripts:
 ```json
 "cms:push":       "optimizely-cms-cli config push ./optimizely.config.mjs",
 "cms:push:force": "optimizely-cms-cli config push ./optimizely.config.mjs --force",
-"cms:pull":       "optimizely-cms-cli config pull --output ./src/content-types --group"
+"cms:pull":       "optimizely-cms-cli config pull --output ./src/content-types --group && npm run sync"
 ```
 
 `--group` (added in 2.2.0) separates content types and display templates into individual files.
+`cms:pull` chains `npm run sync` on afterward — it's fast, idempotent, and additive-only, and
+skipping it silently breaks registration (see §12).
 
 ---
 
@@ -176,17 +178,15 @@ This generates:
 > **New interactive prompt since CLI 3.0.0:** `config pull` now asks
 > `Generate a registry file (registry.ts) for the generated types?`. There's no flag to
 > pre-answer it (pull is documented as interactive-only), so a scripted/CI pull will block
-> on it. **Answer `N`** for this project — `registry.ts` would call `init*Registry()` a
-> second time alongside the `init*Registry()` calls `src/optimizely.ts` already makes via
-> `npm run sync`, and it doesn't know about the component-resolver mapping or hand-added
-> types like `BlankExperienceContentType` either way. Revisit if `sync-registries.mjs` ever
-> becomes a maintenance burden — see the `registry-ts-exploration` memory for the tradeoffs.
+> on it. **Answer `Y`** — `src/content-types/registry.ts` is now the single source for
+> content-type/display-template registration (`src/optimizely.ts` just calls its
+> `initialize()`). It's fully rewritten on every pull, so `npm run sync` re-patches it to
+> fold in `BlankExperienceContentType` (an SDK-builtin, not sourced from the CMS) — never
+> hand-edit `registry.ts` itself, edits won't survive the next pull.
 
-Then sync the registries:
-
-```bash
-npm run sync
-```
+`npm run cms:pull` already runs `npm run sync` afterward — no separate step needed. Only run
+`npm run sync` by hand after a raw `npx @optimizely/cms-cli config pull` that bypassed the
+npm script, or after `npm run scaffold` creates a new component file.
 
 ---
 
@@ -281,3 +281,32 @@ request introduced by the new SDK — but rule out transient flakiness against t
 Graph endpoint first by simply running the build again before concluding it's a real
 regression. A clean re-run with zero code changes is strong evidence it was the network,
 not the upgrade.
+
+---
+
+## 12. `optimizely.config.mjs`'s `components` field must point at real definition files
+
+`components` must glob files that *define or re-export* content types — not `registry.ts`.
+
+`config push`'s `components` glob doesn't import a whole dependency tree — it scans each
+matched file for a `contentType(...)`/`displayTemplate(...)` definition, or a named export
+that re-exports one (which is how the old barrel-file setup worked). `registry.ts` does
+neither: it privately imports every type just to pass them to `initContentTypeRegistry()`
+inside a function body, and only exports `initialize`. Pointing `components` at it makes
+`config push` silently find and push nothing — no error, just "Property Groups found" and
+no content types in the output.
+
+```js
+// Wrong — registry.ts has no contentType()/displayTemplate() exports of its own
+components: ['./src/content-types/registry.ts'],
+
+// Right — glob the actual definition files, registry.ts matches too but has nothing to find
+components: [
+  './src/content-types/**/*.ts',
+  '!./src/content-types/registry.ts',
+],
+```
+
+Verify with `npx optimizely-cms-cli config push ./optimizely.config.mjs --dryRun` — it
+should print a `Content Type`/`Display Template` line for every type before you trust a
+real push.
