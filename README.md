@@ -59,7 +59,8 @@ src/
 │   ├── component/              # Content type + display template definitions
 │   ├── experience/             # Experience content type definitions
 │   ├── page/                   # Page content type definitions
-│   └── displayTemplates/       # Display template registry index + standalone templates
+│   ├── displayTemplates/       # Standalone display template files
+│   └── registry.ts             # CLI-generated — registers every pulled content type + display template
 ├── lib/
 │   ├── config.ts               # Graph gateway URL helper
 │   └── graphClient.ts          # Shared GraphClient factory
@@ -76,8 +77,9 @@ src/
 
 2. **Pull to code:**
    ```bash
-   npx @optimizely/cms-cli config pull --output ./src/content-types --group
+   npm run cms:pull
    ```
+   Answer **`Y`** to the `Generate a registry file (registry.ts)?` prompt — `src/content-types/registry.ts` is how this app registers every content type and display template with the SDK. This script runs `npm run sync` afterward automatically, so `registry.ts` is already patched by the time it finishes.
 
 3. **Generate a component shell:**
    ```bash
@@ -99,15 +101,15 @@ src/
    });
    ```
 
-5. **Wire up the registries:**
+5. **Wire up the component:**
    ```bash
    npm run sync
    ```
-   Exports the Content Type, re-exports the Display Template, exports the component, and adds it to the resolver.
+   Exports the component and adds it to the resolver. (The content type and display template are already registered — the pull itself regenerated `registry.ts` to include them.)
 
 6. **Push to the CMS** *(required if you added or changed a display template)*:
    ```bash
-   npx @optimizely/cms-cli config push ./optimizely.config.mjs
+   npm run cms:push
    ```
 
 7. **Implement the component** — replace the scaffold in `src/components/blocks/MyBlock.tsx` with your real rendering logic. Use `CardBlock.tsx` or `HeroBlock.tsx` as a reference.
@@ -128,7 +130,9 @@ In your CMS instance, create the new content type under **Content Types**. Defin
 npx @optimizely/cms-cli config pull --output ./src/content-types --group
 ```
 
-This generates or updates files in `src/content-types/`. For a component named `MyBlock`, it creates:
+(`npm run cms:pull` runs this exact command, then `npm run sync`, in one step.)
+
+Answer **`Y`** to the `Generate a registry file (registry.ts)?` prompt. This generates or updates files in `src/content-types/`. For a component named `MyBlock`, it creates:
 
 ```
 src/content-types/component/MyBlock.ts
@@ -140,22 +144,16 @@ exporting the content type definition:
 export const MyBlockCT = contentType({ ... });
 ```
 
+...and adds `MyBlockCT` to `src/content-types/registry.ts`'s import list and `initContentTypeRegistry([...])` call — nothing to export by hand.
+
 > **Note:** If you modify these files in code, push your changes to the CMS before the next pull — otherwise they will be overwritten:
 > ```bash
 > npx @optimizely/cms-cli config push ./optimizely.config.mjs
 > ```
+>
+> `registry.ts` itself is fully regenerated on every pull too — never hand-edit it. `npm run sync` re-patches it afterward to fold in `BlankExperienceContentType`, an SDK-builtin content type that isn't sourced from the CMS.
 
-#### Step 3 — Export the content type
-
-In `src/content-types/index.ts`, add an export:
-
-```ts
-export { MyBlockCT } from './component/MyBlock';
-```
-
-> `npm run sync` handles this automatically.
-
-#### Step 4 — Define and export the display template (if applicable)
+#### Step 3 — Define the display template (if applicable)
 
 Display templates are defined in code and co-located with their content type. Add the display template to the same file the CLI generated:
 
@@ -174,23 +172,17 @@ export const MyBlockDisplayTemplateDT = displayTemplate({
 });
 ```
 
-Then re-export it from `src/content-types/displayTemplates/index.ts`:
+Nothing to export by hand — it isn't registered anywhere yet (it doesn't exist in the CMS until you push it), but the component below can already import it directly by path for its `displaySettings` type.
 
-```ts
-export { MyBlockDisplayTemplateDT } from '../component/MyBlock';
-```
-
-> `npm run sync` handles the re-export automatically.
-
-#### Step 5 — Push the display template to the CMS
+#### Step 4 — Push the display template to the CMS
 
 ```bash
 npx @optimizely/cms-cli config push ./optimizely.config.mjs
 ```
 
-This syncs your display template definition (and any content type changes) to the CMS so it appears in the Visual Builder settings panel.
+This syncs your display template definition (and any content type changes) to the CMS so it appears in the Visual Builder settings panel. Pull again afterward to pick it up into `registry.ts`.
 
-#### Step 6 — Create the React component
+#### Step 5 — Create the React component
 
 Create `src/components/blocks/MyBlock.tsx`. The component receives `content` and optionally `displaySettings`:
 
@@ -213,7 +205,7 @@ export default function MyBlock({ content, displaySettings }: Props) {
 
 > `npm run scaffold MyBlock` generates this shell automatically.
 
-#### Step 7 — Export the component
+#### Step 6 — Export the component
 
 In `src/components/index.ts`:
 
@@ -223,7 +215,7 @@ export { default as MyBlock } from './blocks/MyBlock';
 
 > `npm run sync` handles this automatically.
 
-#### Step 8 — Register the component
+#### Step 7 — Register the component
 
 In `src/optimizely.ts`, add the component to the resolver:
 
@@ -277,7 +269,7 @@ After scaffolding, run `npm run sync` to export the component and register it in
 
 ## Registry Sync Script
 
-`scripts/sync-registries.mjs` keeps four registry files in sync with whatever the CLI deposited in `src/content-types/`. Run it after any `config pull`:
+`scripts/sync-registries.mjs` keeps things in sync with whatever the CLI deposited in `src/content-types/`. `npm run cms:pull` already runs it automatically (with the `registry.ts` prompt answered `Y`); run it by hand after scaffolding a component, or after any raw `config pull` invocation that bypassed the npm script:
 
 ```bash
 npm run sync
@@ -287,10 +279,11 @@ The script is **additive only** — it never removes entries.
 
 | File | What it adds |
 |---|---|
-| `src/content-types/index.ts` | `export { MyBlockCT }` for each new `*CT` found in `component/`, `page/`, or `experience/` |
-| `src/content-types/displayTemplates/index.ts` | Re-export for each new `*DisplayTemplateDT` found co-located in `component/` or as a standalone file in `displayTemplates/` |
+| `src/content-types/registry.ts` | Folds `BlankExperienceContentType` into the import list and `initContentTypeRegistry([...])` call, if not already there. Everything else in this file is CLI-generated fresh on every pull — nothing else for the script to add. |
 | `src/components/index.ts` | `export { default as MyBlock }` for each new `.tsx` found in `blocks/`, `elements/`, `pages/`, or `experiences/` |
 | `src/optimizely.ts` | `MyBlock: components.MyBlock` resolver entry for each component that has a matching CT file |
+
+> `registry.ts` is CLI-owned and fully rewritten on every pull — never hand-edit it. `BlankExperienceContentType` is an SDK-builtin content type, not something sourced from the CMS, which is why it needs this one patch step rather than a manual export.
 
 > **Resolver entries:** The script only adds resolver entries for components whose filename matches a CT defined in code (e.g. `MyBlock.tsx` + `MyBlock.ts`). Components backed by SDK-provided content types — such as `BlankExperience` and `BlankSection` — are registered manually and are not touched.
 

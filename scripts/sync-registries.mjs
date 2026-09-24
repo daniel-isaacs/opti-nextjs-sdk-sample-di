@@ -2,13 +2,16 @@
 /**
  * scripts/sync-registries.mjs
  *
- * Run after `npx @optimizely/cms-cli config pull` to keep four registry
- * files in sync with whatever the CLI deposited in src/content-types/:
+ * Run after `npx @optimizely/cms-cli config pull --group` (which also
+ * regenerates src/content-types/registry.ts) to keep things in sync:
  *
- *   src/content-types/index.ts              — CT exports
- *   src/content-types/displayTemplates/index.ts — DT re-exports
- *   src/components/index.ts                 — component exports
- *   src/optimizely.ts                       — resolver entries
+ *   src/content-types/registry.ts — patched to fold in BlankExperienceContentType
+ *   src/components/index.ts       — component exports
+ *   src/optimizely.ts             — resolver entries
+ *
+ * registry.ts is CLI-owned and fully rewritten on every pull, so
+ * BlankExperienceContentType (an SDK-builtin, not sourced from the CMS) has
+ * to be re-added here rather than hand-edited into the generated file.
  *
  * The script is additive only — it never removes entries.
  */
@@ -58,9 +61,6 @@ const componentCTs  = findNamedExports(src('content-types', 'component'),  'CT')
 const pageCTs       = findNamedExports(src('content-types', 'page'),       'CT');
 const experienceCTs = findNamedExports(src('content-types', 'experience'), 'CT');
 
-// Display templates live as standalone files in displayTemplates/
-const standaloneDTs = findNamedExports(src('content-types', 'displayTemplates'), 'DisplayTemplate');
-
 // ── Discover components ──────────────────────────────────────────────────────
 
 const COMPONENT_SUBDIRS = ['blocks', 'elements', 'pages', 'experiences'];
@@ -71,57 +71,35 @@ const allComponents = COMPONENT_SUBDIRS.flatMap(dir =>
   }))
 );
 
-// ── 1. src/content-types/index.ts ───────────────────────────────────────────
+// ── 1. src/content-types/registry.ts — fold in BlankExperienceContentType ──
 
-console.log('\nsrc/content-types/index.ts');
+console.log('\nsrc/content-types/registry.ts');
 {
-  const path = src('content-types', 'index.ts');
-  let text = read(path);
-  let added = 0;
+  const path = src('content-types', 'registry.ts');
+  if (!existsSync(path)) {
+    console.log('  (not found — did you pull with the registry.ts prompt answered "yes"?)');
+  } else {
+    let text = read(path);
 
-  for (const { name, stem } of componentCTs) {
-    if (text.includes(`{ ${name} }`)) continue;
-    text += `export { ${name} } from './component/${stem}';\n`;
-    console.log(`  + ${name}`);
-    added++;
-  }
-  for (const { name, stem } of pageCTs) {
-    if (text.includes(`{ ${name} }`)) continue;
-    text += `export { ${name} } from './page/${stem}';\n`;
-    console.log(`  + ${name}`);
-    added++;
-  }
-  for (const { name, stem } of experienceCTs) {
-    if (text.includes(`{ ${name} }`)) continue;
-    text += `export { ${name} } from './experience/${stem}';\n`;
-    console.log(`  + ${name}`);
-    added++;
-  }
+    if (text.includes('BlankExperienceContentType')) {
+      console.log('  (nothing to add)');
+    } else {
+      const importPattern = /import \{([^}]*)\} from '@optimizely\/cms-sdk';/;
+      const arrayPattern = /(\n  initContentTypeRegistry\(\[\n(?:.*\n)*?)(\s*\]\);)/;
 
-  if (added > 0) write(path, text);
-  else console.log('  (nothing to add)');
+      if (!importPattern.test(text) || !arrayPattern.test(text)) {
+        console.error('  ERROR: unrecognized shape — fold in BlankExperienceContentType manually');
+      } else {
+        text = text.replace(importPattern, (_, names) => `import {${names.trimEnd()}, BlankExperienceContentType } from '@optimizely/cms-sdk';`);
+        text = text.replace(arrayPattern, (_, head, tail) => `${head}    BlankExperienceContentType,\n${tail}`);
+        write(path, text);
+        console.log('  + BlankExperienceContentType');
+      }
+    }
+  }
 }
 
-// ── 2. src/content-types/displayTemplates/index.ts ──────────────────────────
-
-console.log('\nsrc/content-types/displayTemplates/index.ts');
-{
-  const path = src('content-types', 'displayTemplates', 'index.ts');
-  let text = read(path);
-  let added = 0;
-
-  for (const { name, stem } of standaloneDTs) {
-    if (text.includes(`{ ${name} }`)) continue;
-    text += `export { ${name} } from './${stem}';\n`;
-    console.log(`  + ${name}  (from ./${stem})`);
-    added++;
-  }
-
-  if (added > 0) write(path, text);
-  else console.log('  (nothing to add)');
-}
-
-// ── 3. src/components/index.ts ──────────────────────────────────────────────
+// ── 2. src/components/index.ts ──────────────────────────────────────────────
 
 console.log('\nsrc/components/index.ts');
 {
@@ -140,7 +118,7 @@ console.log('\nsrc/components/index.ts');
   else console.log('  (nothing to add)');
 }
 
-// ── 4. src/optimizely.ts resolver ───────────────────────────────────────────
+// ── 3. src/optimizely.ts resolver ───────────────────────────────────────────
 
 console.log('\nsrc/optimizely.ts (resolver)');
 {

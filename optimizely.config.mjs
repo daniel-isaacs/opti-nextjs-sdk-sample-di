@@ -1,7 +1,10 @@
 import { buildConfig } from '@optimizely/cms-sdk';
 
 export default buildConfig({
-  components: ['./src/content-types/index.ts', './src/content-types/displayTemplates/index.ts'],
+  components: [
+    './src/content-types/**/*.ts',
+    '!./src/content-types/registry.ts', // generated — re-imports types, defines none itself
+  ],
   locale: ['en'],
   propertyGroups: [
     {
