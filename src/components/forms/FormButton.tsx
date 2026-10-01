@@ -5,10 +5,14 @@ import { FormElement, useFormButton } from '@optimizely/cms-sdk/forms/react';
 type FormButtonContent = {
   Label?: string | null;
   Tooltip?: string | null;
+  __typename?: string;
 } & Record<string, unknown>;
 
 export default function FormButton({ content }: { content: FormButtonContent }) {
-  const { role, label, isSubmitting, buttonProps } = useFormButton(content);
+  const { role, label, isSubmitting, buttonProps } = useFormButton(
+    content,
+    content.__typename === 'OptiFormsResetElement' ? { role: 'reset' } : undefined,
+  );
 
   return (
     <FormElement content={content}>
