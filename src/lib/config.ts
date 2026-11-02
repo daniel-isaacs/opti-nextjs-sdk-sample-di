@@ -29,3 +29,13 @@ export function getGraphGatewayUrl(): string {
   const baseUrl = gateway.replace(/\/+$/, "");
   return `${baseUrl}${graphPath}`;
 }
+
+/**
+ * Returns the URL of the CMS communication injector script used for preview.
+ *
+ * OPTIMIZELY_CMS_URL may be set with or without a trailing slash.
+ */
+export function getCommunicationInjectorUrl(): string {
+  const baseUrl = (process.env.OPTIMIZELY_CMS_URL ?? "").replace(/\/+$/, "");
+  return `${baseUrl}/util/javascript/communicationinjector.js`;
+}

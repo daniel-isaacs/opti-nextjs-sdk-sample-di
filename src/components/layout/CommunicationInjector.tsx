@@ -1,11 +1,12 @@
 'use client';
 
 import Script from "next/script";
+import { getCommunicationInjectorUrl } from "@/lib/config";
 
 export default function CommunicationInjector() {
   return (
     <Script
-      src={`${process.env.OPTIMIZELY_CMS_URL}/util/javascript/communicationinjector.js`}
+      src={getCommunicationInjectorUrl()}
       strategy="beforeInteractive"
       id="optimizely-communication-injector"
     />

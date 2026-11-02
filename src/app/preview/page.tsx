@@ -1,7 +1,7 @@
 import { GraphClient, type PreviewParams } from '@optimizely/cms-sdk';
 import { OptimizelyComponent, withAppContext } from '@optimizely/cms-sdk/react/server';
 import { NextPreviewComponent } from '@optimizely/cms-sdk/react/nextjs';
-import { getGraphGatewayUrl } from '@/lib/config';
+import { getCommunicationInjectorUrl, getGraphGatewayUrl } from '@/lib/config';
 import PreviewError from '@/components/layout/PreviewError';
 import Script from 'next/script';
 
@@ -46,7 +46,7 @@ async function Page({ searchParams }: Props) {
     <div>
       {/* <CommunicationInjector /> */}
     <Script
-      src={`${process.env.OPTIMIZELY_CMS_URL}/util/javascript/communicationinjector.js`}
+      src={getCommunicationInjectorUrl()}
       strategy="beforeInteractive"
       id="optimizely-communication-injector"
     />

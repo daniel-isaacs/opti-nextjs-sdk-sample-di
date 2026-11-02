@@ -22,7 +22,7 @@ cp .env.template .env
 
 | Variable | Description |
 |---|---|
-| `OPTIMIZELY_CMS_URL` | Base URL of your CMS instance, e.g. `https://example.cms.optimizely.com/` |
+| `OPTIMIZELY_CMS_URL` | Base URL of your CMS instance, e.g. `https://example.cms.optimizely.com` (a trailing slash is also accepted) |
 | `OPTIMIZELY_GRAPH_GATEWAY` | Content Graph endpoint. Defaults to `https://cg.optimizely.com/content/v2` |
 | `OPTIMIZELY_GRAPH_SINGLE_KEY` | Content Graph read-only key (Settings → API Keys) |
 | `OPTIMIZELY_CMS_CLIENT_ID` | API client ID for the CLI (Settings → API Keys → Create API key) |
