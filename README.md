@@ -8,7 +8,7 @@ A Next.js sample site demonstrating integration with Optimizely CMS using the `@
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22.23.4+ (required by `@optimizely/cms-sdk` and `@optimizely/cms-cli` 3.1.x)
 - An Optimizely CMS instance
 - Access to your CMS API keys (Settings → API Keys)
 
@@ -292,3 +292,7 @@ The script is **additive only** — it never removes entries.
 ## CMS Preview
 
 The visual editor preview is handled by `src/app/preview/page.tsx`. It requires `OPTIMIZELY_CMS_URL` to be set and the app to be reachable from the CMS instance (use a tunnel like ngrok for local development).
+
+### Preview media not loading
+
+As of `@optimizely/cms-sdk` 3.1.0, media URLs in preview no longer include the preview token, and the preview listener retries failed media with it. If images or video still fail to load in the editor, pass `forceMediaToken: true` in the options to `client.getPreviewContent()` in `src/app/preview/page.tsx` to restore the previous behaviour.
